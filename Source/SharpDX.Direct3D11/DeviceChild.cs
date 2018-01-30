@@ -27,6 +27,33 @@ namespace SharpDX.Direct3D11
 {
     public partial class DeviceChild
     {
+        private bool IsDeviceOwner__;
+        protected internal Device Device__;
+
+        /// <summary>	
+        /// <p>Get a reference to the device that created this interface.</p>	
+        /// </summary>	
+        /// <remarks>	
+        /// <p>Any returned interfaces will have their reference count incremented by one, so be sure to call ::release() on the returned reference(s) before they are freed or else you will have a memory leak.</p>	
+        /// </remarks>	
+        /// <include file='.\Documentation\CodeComments.xml' path="/comments/comment[@id='ID3D11DeviceChild::GetDevice']/*"/>	
+        /// <msdn-id>ff476381</msdn-id>	
+        /// <unmanaged>GetDevice</unmanaged>	
+        /// <unmanaged-short>GetDevice</unmanaged-short>	
+        /// <unmanaged>void ID3D11DeviceChild::GetDevice([Out] ID3D11Device** ppDevice)</unmanaged>
+        public Device Device
+        {
+            get
+            {
+                if(Device__ == null)
+                {
+                    GetDevice(out Device__);
+                    IsDeviceOwner__ = true;
+                }
+                return Device__;
+            }
+        }
+
         /// <summary>
         /// Gets or sets the debug-name for this object.
         /// </summary>
@@ -82,12 +109,24 @@ namespace SharpDX.Direct3D11
 
         private void DisposeDevice()
         {
-            if (Device__ != null)
+            var device = Device__;
+
+            if (device != null)
             {
-                // Don't use Dispose() in order to avoid circular references with DeviceContext
-                ((IUnknown)Device__).Release();
                 Device__ = null;
-            }            
+
+                if(IsDeviceOwner__)
+                {
+                    device.Dispose();
+                }
+                else
+                {
+                    // Don't use Dispose() in order to avoid circular references with DeviceContext
+                    ((IUnknown)Device__).Release();
+                }
+
+                IsDeviceOwner__ = false;
+            }
         }
     }
 }
