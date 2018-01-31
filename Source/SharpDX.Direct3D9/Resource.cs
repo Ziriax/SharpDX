@@ -79,11 +79,11 @@ namespace SharpDX.Direct3D9
 
         private void DisposeDevice()
         {
-            if (Device__ != null)
+			var device = Device__;
+            if (device != null)
             {
-                // Don't use Dispose() in order to avoid circular references with DeviceContext
-                ((IUnknown)Device__).Release();
                 Device__ = null;
+                device.Dispose();
             }
         }
     }
