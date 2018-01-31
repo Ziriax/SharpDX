@@ -79,10 +79,11 @@ namespace SharpDX.Direct3D9
 
         private void DisposeDevice()
         {
-            if (Device__ != null)
+			var device = Device__;
+            if (device != null)
             {
-                Device__.Dispose();
                 Device__ = null;
+                device.Dispose();
             }
         }
     }

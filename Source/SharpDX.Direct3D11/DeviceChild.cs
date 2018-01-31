@@ -122,7 +122,7 @@ namespace SharpDX.Direct3D11
                 else
                 {
                     // Don't use Dispose() in order to avoid circular references with DeviceContext
-                    ((IUnknown)Device__).Release();
+                    ((IUnknown)device).Release();
                 }
 
                 IsDeviceOwner__ = false;
