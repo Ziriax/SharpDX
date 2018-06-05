@@ -52,3 +52,4 @@ BuildErrors.log
 #ignore certification test results
 Source/CertificationTests/Results/*
 *.tlog
+MSDNDoc.zip
