@@ -18,7 +18,8 @@ set VCToolsInstallDir=
 if exist "%InstallDir%\VC\Tools\MSVC\%ToolsVersion%\" (
     set "VCToolsInstallDir=%InstallDir%\VC\Tools\MSVC\%ToolsVersion%\"
 )
-SharpGen.exe --doc --castxml ..\..\..\..\..\External\castxml\bin\castxml.exe ..\..\..\..\Mapping.xml --apptype %2 --vctools "%VCToolsInstallDir%
+REM SharpGen.exe --doc --castxml ..\..\..\..\..\External\castxml\bin\castxml.exe ..\..\..\..\Mapping.xml --apptype %2 --vctools "%VCToolsInstallDir%
+SharpGen.exe --castxml ..\..\..\..\..\External\castxml\bin\castxml.exe ..\..\..\..\Mapping.xml --apptype %2 --vctools "%VCToolsInstallDir%
 set LOCALERROR = %ERRORLEVEL%
 xcopy /D /Y MSDNDoc.zip %~dp0
 exit /B %LOCALERROR%
