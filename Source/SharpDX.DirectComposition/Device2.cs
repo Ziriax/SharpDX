@@ -5,8 +5,13 @@ using System.Text;
 
 namespace SharpDX.DirectComposition
 {
-	partial class Device2
+    public partial class Device2
 	{
+        /// <summary>
+        /// Used for inherited constructors
+        /// </summary>
+        protected Device2() { }
+
 		/// <summary>
 		/// Creates a new device object that can be used to create other Microsoft DirectComposition objects.
 		/// </summary>

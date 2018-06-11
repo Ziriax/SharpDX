@@ -133,9 +133,9 @@
     <map struct="DXGI(.+)" name-tmp="$1" />
     <remove struct="DXGI_DISPLAY_COLOR_SPACE" />
 
-    <map field="DXGI_ADAPTER_DESC[12]?::AdapterLuid" name="Luid" />
-    <map field="DXGI_ADAPTER_DESC[12]?::SubSysId" name="SubsystemId" />
-    <map field="DXGI_ADAPTER_DESC[12]::Flags" type="DXGI_ADAPTER_FLAG" />
+    <map field="DXGI_ADAPTER_DESC[123]?::AdapterLuid" name="Luid" />
+    <map field="DXGI_ADAPTER_DESC[123]?::SubSysId" name="SubsystemId" />
+    <map field="DXGI_ADAPTER_DESC[123]::Flags" type="DXGI_ADAPTER_FLAG" />
 
     <map field="DXGI_GAMMA_CONTROL_CAPABILITIES::MaxConvertedValue" name="MaximumConvertedValue" />
     <map field="DXGI_GAMMA_CONTROL_CAPABILITIES::MinConvertedValue" name="MinimumConvertedValue" />
@@ -160,6 +160,8 @@
     
     <map struct="DXGI_ADAPTER_DESC" pack="4"/>
     <map struct="DXGI_ADAPTER_DESC1" pack="4"/>
+    <map struct="DXGI_ADAPTER_DESC2" pack="4"/>
+    <map struct="DXGI_ADAPTER_DESC3" pack="4"/>
 
     <map struct="DXGI_INFO_QUEUE_FILTER" name="InfoQueueFilter" />
     <map struct="DXGI_INFO_QUEUE_FILTER_DESC" name="InfoQueueFilterDescription" />
@@ -174,6 +176,8 @@
     <map interface="IDXGI(.+)" name-tmp="$1" />
     <map interface="IDXGIObject" name="DXGIObject" />
     <map interface="IDXGIDeviceSubObject" name="DeviceChild" />
+    <map interface="IDXGIDebug" name="DXGIDebug" />
+    <map interface="IDXGIDebug1" name="DXGIDebug1" />
 
     <map method=".*::GetPrivateData" check="false"/>
 
@@ -185,13 +189,13 @@
     <map method="IDXGIDevice::QueryResourceResidency" visibility="internal" />
 
     <map method="IDXGIFactory::CreateSwapChain" visibility="internal" />
-    <map param="ppSwapChain" attribute="out fast"/>
+    <map param="IDXGIFactory::CreateSwapChain::ppSwapChain" attribute="out fast"/>
 
     <map param="IDXGIFactory::CreateSoftwareAdapter::ppAdapter" return="true" />
     <map method="IDXGIFactory::EnumAdapters" name="GetAdapter" visibility="internal" check="false"/>
     <map method="IDXGIFactory1::EnumAdapters1" name="GetAdapter1" visibility="internal" check="false"/>
     <map method="IDXGIFactory::GetWindowAssociation" property="false" />
-    <map param="pWindowHandle" return="true" />
+    <map param="IDXGIFactory::GetWindowAssociation::pWindowHandle" return="true" />
     <map param="IDXGIFactory::MakeWindowAssociation::Flags" type="DXGI_MWA_FLAGS" />
 
     <map method="IDXGIFactory2::Create.*" visibility="internal" />
@@ -248,6 +252,8 @@
     <map param="IDXGIOutput5::DuplicateOutput1::ppOutputDuplication" return="true"/>
     <map param="IDXGIOutput4::CheckOverlayColorSpaceSupport::pFlags" return="true"/>
     <map param="IDXGIOutput3::CheckOverlaySupport::pFlags" return="true"/>
+
+    <map method="IDXGIOutputDuplication::AcquireNextFrame" hresult="true" check="false" visibility="public" name="TryAcquireNextFrame" />
 
     <map param="ISurfaceImageSourceNative::BeginDraw::surface" return="true"/>
 
